@@ -65,7 +65,7 @@ export default async function DashboardPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <span className="font-bold text-slate-900">StagingAI</span>
+            <span className="font-bold text-slate-900">esyaekle</span>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-slate-400 hidden sm:block">{user.email}</span>

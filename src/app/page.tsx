@@ -11,7 +11,7 @@ function Navbar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <span className="font-bold text-slate-900 text-lg">StagingAI</span>
+          <span className="font-bold text-slate-900 text-lg">esyaekle</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-slate-500">
           <a href="#nasil-calisir" className="hover:text-slate-900 transition-colors">Nasıl çalışır?</a>
@@ -53,7 +53,7 @@ function Hero() {
         {/* Subheadline — konumlama: rakibe karşı */}
         <p className="text-center text-xl text-slate-500 max-w-2xl mx-auto mb-4 leading-relaxed">
           Fiziksel staging <strong className="text-slate-700">5.000–15.000 TL</strong> ve 3 gün sürer.
-          StagingAI ile aynı profesyonelliği <strong className="text-slate-700">30 saniyede</strong>, herhangi bir maliyet olmadan elde edin.
+          esyaekle ile aynı profesyonelliği <strong className="text-slate-700">30 saniyede</strong>, herhangi bir maliyet olmadan elde edin.
         </p>
 
         {/* Social proof line */}
@@ -347,7 +347,7 @@ function Testimonials() {
               role: "Emlak Danışmanı, İstanbul",
             },
             {
-              quote: "Müşterilerim boş evi beğenmiyordu. StagingAI ile aynı evi sahneli olarak gösterince reaksiyon tamamen değişti. Satış süresi yarıya indi.",
+              quote: "Müşterilerim boş evi beğenmiyordu. esyaekle ile aynı evi sahneli olarak gösterince reaksiyon tamamen değişti. Satış süresi yarıya indi.",
               name: "Selin K.",
               role: "Gayrimenkul Uzmanı, Ankara",
             },
@@ -456,7 +456,7 @@ function Footer() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <span className="text-sm font-bold text-white">StagingAI</span>
+          <span className="text-sm font-bold text-white">esyaekle</span>
         </div>
         <div className="flex items-center gap-6 text-sm text-slate-500">
           <a href="#nasil-calisir" className="hover:text-slate-300 transition-colors">Nasıl çalışır?</a>

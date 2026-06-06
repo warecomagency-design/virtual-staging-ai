@@ -67,7 +67,7 @@ export default function SignUpPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <span className="font-bold text-slate-900">StagingAI</span>
+            <span className="font-bold text-slate-900">esyaekle</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Hesap Oluştur</h1>
           <p className="text-slate-500 text-sm mt-1">Ücretsiz başlayın</p>

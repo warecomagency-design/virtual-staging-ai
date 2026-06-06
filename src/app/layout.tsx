@@ -5,7 +5,7 @@ import "./globals.css";
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Virtual Staging AI",
+  title: "esyaekle",
   description: "Boş odaları tek tıkla yaşanılabilir hale getirin",
 };
 
