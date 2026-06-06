@@ -16,6 +16,7 @@ function Navbar() {
         <div className="hidden md:flex items-center gap-8 text-sm text-slate-500">
           <a href="#nasil-calisir" className="hover:text-slate-900 transition-colors">Nasıl çalışır?</a>
           <a href="#ozellikler" className="hover:text-slate-900 transition-colors">Özellikler</a>
+          <a href="#fiyatlandirma" className="hover:text-slate-900 transition-colors">Fiyatlar</a>
           <a href="#sss" className="hover:text-slate-900 transition-colors">SSS</a>
         </div>
         <div className="flex items-center gap-3">
@@ -386,7 +387,7 @@ function FAQ() {
     },
     {
       q: "Ücretli mi?",
-      a: "Şu an tamamen ücretsiz. Üye olun, hemen deneyin.",
+      a: "Kayıt olunca 15 ücretsiz kredi (3 sahneleme) verilir. Daha fazlası için kredi paketi satın alabilirsiniz.",
     },
   ];
 
@@ -404,6 +405,93 @@ function FAQ() {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Pricing ─────────────────────────────────────────────── */
+function Pricing() {
+  const packages = [
+    { key: "baslangic", name: "Başlangıç", price: 49, credits: 150, stagings: 30, popular: false },
+    { key: "pro", name: "Pro", price: 99, credits: 200, stagings: 40, popular: true },
+    { key: "plus", name: "Plus", price: 120, credits: 350, stagings: 70, popular: false },
+  ];
+
+  return (
+    <section id="fiyatlandirma" className="py-20 px-6 bg-slate-50">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-4">
+          <h2 className="text-3xl font-bold text-slate-900 mb-3">Kredi Paketleri</h2>
+          <p className="text-slate-500">Tek seferlik ödeme. Her sahneleme 5 kredi harcar.</p>
+        </div>
+        <p className="text-center text-sm text-blue-600 font-semibold mb-10">
+          Kayıt olunca 15 ücretsiz kredi — kredi kartı gerekmez
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {packages.map((pkg) => (
+            <div
+              key={pkg.key}
+              className={`relative bg-white rounded-2xl border p-7 flex flex-col ${
+                pkg.popular
+                  ? "border-blue-500 shadow-lg shadow-blue-100 scale-[1.02]"
+                  : "border-slate-200"
+              }`}
+            >
+              {pkg.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full">
+                  En Popüler
+                </span>
+              )}
+              <div className="mb-5">
+                <h3 className="font-bold text-slate-900 text-lg mb-1">{pkg.name}</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-slate-900">{pkg.price}</span>
+                  <span className="text-slate-500 font-medium">TL</span>
+                </div>
+              </div>
+              <div className="space-y-2.5 mb-7 flex-1">
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>{pkg.credits} kredi</strong></span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{pkg.stagings} sahneleme hakkı</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Süresi dolmaz</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Tüm stiller & oda tipleri</span>
+                </div>
+              </div>
+              <Link
+                href={`/sign-up?plan=${pkg.key}`}
+                className={`w-full py-3 rounded-xl font-bold text-sm text-center transition-colors ${
+                  pkg.popular
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-slate-100 text-slate-800 hover:bg-slate-200"
+                }`}
+              >
+                Satın Al
+              </Link>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-xs text-slate-400 mt-6">
+          Güvenli ödeme · Stripe ile şifrelenir · Türk Lirası
+        </p>
       </div>
     </section>
   );
@@ -467,6 +555,7 @@ export default function LandingPage() {
       <HowItWorks />
       <Features />
       <Testimonials />
+      <Pricing />
       <FAQ />
       <FinalCTA />
       <Footer />

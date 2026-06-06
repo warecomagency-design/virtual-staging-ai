@@ -58,6 +58,22 @@ export async function POST(request: NextRequest) {
     );
     const { data: { user } } = await supabase.auth.getUser();
 
+    // Check credits (5 per staging)
+    if (user) {
+      const { data: creditsRow } = await supabase
+        .from("user_credits")
+        .select("balance")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      const balance = creditsRow?.balance ?? 0;
+      if (balance < 5) {
+        return Response.json(
+          { error: "Yetersiz kredi. Sahneleme için 5 kredi gerekiyor. Kredi satın almak için ana sayfaya gidin." },
+          { status: 402 }
+        );
+      }
+    }
+
     // Generate image
     const base64Data = image.split(",")[1];
     const mimeType = image.split(";")[0].split(":")[1] as string;
@@ -148,6 +164,9 @@ ${customPrompt ? `\nADDITIONAL INSTRUCTIONS FROM THE USER (high priority, follow
             style: style ?? "modern",
             room_type: roomType ?? "living",
           });
+
+          // Deduct 5 credits after successful save
+          await supabase.rpc("deduct_user_credits", { p_user_id: uid, p_amount: 5 });
 
           return Response.json({ image: outputImage, saved: true });
         }

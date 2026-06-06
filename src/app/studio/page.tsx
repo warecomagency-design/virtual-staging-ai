@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createBrowserClient } from "@supabase/ssr";
 
 const STYLES = [
   { id: "modern", label: "Modern", desc: "Temiz çizgiler, nötr tonlar" },
@@ -30,7 +31,20 @@ export default function StudioPage() {
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [credits, setCredits] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase.from("user_credits").select("balance").eq("user_id", user.id).maybeSingle()
+        .then(({ data }) => setCredits(data?.balance ?? 0));
+    });
+  }, [result]);
 
   const handleFile = (file: File) => {
     if (!file.type.startsWith("image/")) return;
@@ -120,14 +134,23 @@ export default function StudioPage() {
             })}
           </div>
 
-          {saved && (
-            <span className="text-xs text-green-600 flex items-center gap-1 font-semibold bg-green-50 px-2.5 py-1 rounded-full">
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-              Arşive kaydedildi
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {credits !== null && (
+              <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${
+                credits < 5 ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
+              }`}>
+                {credits} kredi
+              </span>
+            )}
+            {saved && (
+              <span className="text-xs text-green-600 flex items-center gap-1 font-semibold bg-green-50 px-2.5 py-1 rounded-full">
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                Kaydedildi
+              </span>
+            )}
+          </div>
         </div>
       </header>
 
@@ -280,10 +303,22 @@ export default function StudioPage() {
           )}
         </div>
 
+        {/* Low credit warning */}
+        {credits !== null && credits < 5 && (
+          <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between gap-3">
+            <p className="text-amber-800 text-sm font-medium">
+              {credits === 0 ? "Krediniz tükendi." : `Yalnızca ${credits} krediniz var.`} Sahneleme için en az 5 kredi gerekiyor.
+            </p>
+            <Link href="/#fiyatlandirma" className="text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors px-3 py-1.5 rounded-xl flex-shrink-0">
+              Kredi Al
+            </Link>
+          </div>
+        )}
+
         {/* CTA button */}
         <button
           onClick={handleStage}
-          disabled={!image || loading}
+          disabled={!image || loading || (credits !== null && credits < 5)}
           className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-base hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-md shadow-blue-100"
         >
           {loading ? (
@@ -295,7 +330,7 @@ export default function StudioPage() {
               AI sahneyi oluşturuyor…
             </span>
           ) : (
-            "Sahneyi Oluştur"
+            "Sahneyi Oluştur — 5 Kredi"
           )}
         </button>
 

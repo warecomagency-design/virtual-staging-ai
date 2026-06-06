@@ -38,14 +38,14 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/sign-in");
 
-  const { data: stagings } = await supabase
-    .from("stagings")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: stagings }, { data: creditsRow }] = await Promise.all([
+    supabase.from("stagings").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
+    supabase.from("user_credits").select("balance").eq("user_id", user.id).maybeSingle(),
+  ]);
 
   const list: Staging[] = stagings ?? [];
   const monthCount = thisMonth(list);
+  const balance: number = creditsRow?.balance ?? 0;
 
   const handleSignOut = async () => {
     "use server";
@@ -80,7 +80,13 @@ export default async function DashboardPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Credit balance — highlighted */}
+          <div className="bg-blue-600 rounded-2xl px-6 py-5 col-span-1">
+            <div className="text-3xl font-bold text-white">{balance}</div>
+            <div className="text-sm text-blue-100 mt-1">Kalan Kredi</div>
+            <div className="text-xs text-blue-200 mt-0.5">Her sahneleme 5 kredi</div>
+          </div>
           {[
             { value: list.length, label: "Toplam Sahneleme" },
             { value: monthCount, label: "Bu Ay" },
@@ -92,6 +98,18 @@ export default async function DashboardPage() {
             </div>
           ))}
         </div>
+
+        {/* Low credit warning */}
+        {balance < 10 && balance >= 0 && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 flex items-center justify-between">
+            <p className="text-amber-800 text-sm font-medium">
+              {balance === 0 ? "Krediniz tükendi." : `Yalnızca ${balance} krediniz kaldı.`} Yeni sahneleme için kredi satın alın.
+            </p>
+            <Link href="/#fiyatlandirma" className="text-xs font-bold text-amber-900 underline underline-offset-2 flex-shrink-0 ml-4">
+              Kredi Al
+            </Link>
+          </div>
+        )}
 
         {/* Top bar */}
         <div className="flex items-center justify-between">
