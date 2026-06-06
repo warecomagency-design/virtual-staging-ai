@@ -413,9 +413,9 @@ function FAQ() {
 /* ── Pricing ─────────────────────────────────────────────── */
 function Pricing() {
   const packages = [
-    { key: "baslangic", name: "Başlangıç", price: 49, credits: 150, stagings: 30, popular: false },
-    { key: "pro", name: "Pro", price: 99, credits: 200, stagings: 40, popular: true },
-    { key: "plus", name: "Plus", price: 120, credits: 350, stagings: 70, popular: false },
+    { key: "baslangic", name: "Başlangıç", price: 49, credits: 50, stagings: 10, popular: false },
+    { key: "pro", name: "Pro", price: 99, credits: 150, stagings: 30, popular: true },
+    { key: "plus", name: "Plus", price: 120, credits: 200, stagings: 40, popular: false },
   ];
 
   return (
