@@ -35,7 +35,7 @@ export default function CreditsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-geist)]">
-      <div className="max-w-3xl mx-auto px-6 py-10">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-slate-900 mb-2">Kredi Paketleri</h1>
           <p className="text-slate-500 text-sm">Her sahneleme 5 kredi harcar. Krediler süresi dolmaz.</p>
