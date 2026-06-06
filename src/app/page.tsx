@@ -85,46 +85,33 @@ function Hero() {
         <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100">
           <div className="grid grid-cols-2">
             {/* Before */}
-            <div className="relative bg-slate-100 aspect-video flex flex-col items-center justify-center gap-3 p-8">
-              <div className="absolute top-4 left-4">
-                <span className="bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">ÖNCE</span>
-              </div>
-              <div className="w-24 h-24 bg-slate-200 rounded-2xl flex items-center justify-center">
-                <svg className="w-10 h-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <div className="text-center">
-                <p className="text-slate-500 font-semibold text-sm">Boş oda</p>
-                <p className="text-slate-400 text-xs mt-1">Alıcılar pas geçiyor</p>
-              </div>
-              <div className="absolute bottom-4 right-4 bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-lg">
+            <div className="relative">
+              <img
+                src="/before.jpg"
+                alt="Boş oda — önce"
+                className="w-full aspect-video object-cover"
+              />
+              <span className="absolute top-4 left-4 bg-slate-800/80 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+                ÖNCE
+              </span>
+              <span className="absolute bottom-4 right-4 bg-red-500/90 text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
                 Düşük dönüşüm
-              </div>
+              </span>
             </div>
 
             {/* After */}
-            <div className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 aspect-video flex flex-col items-center justify-center gap-3 p-8 border-l border-slate-100">
-              <div className="absolute top-4 left-4">
-                <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">SONRA</span>
-              </div>
-              <div className="w-24 h-24 bg-blue-100 rounded-2xl flex items-center justify-center relative">
-                <svg className="w-10 h-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-                <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-              </div>
-              <div className="text-center">
-                <p className="text-blue-700 font-semibold text-sm">AI ile sahnelendi</p>
-                <p className="text-slate-500 text-xs mt-1">30 saniyede hazır</p>
-              </div>
-              <div className="absolute bottom-4 right-4 bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-lg">
+            <div className="relative border-l border-slate-100">
+              <img
+                src="/after.png"
+                alt="Mobilyalı oda — sonra"
+                className="w-full aspect-video object-cover"
+              />
+              <span className="absolute top-4 left-4 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+                SONRA
+              </span>
+              <span className="absolute bottom-4 right-4 bg-green-500/90 text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
                 Yüksek dönüşüm
-              </div>
+              </span>
             </div>
           </div>
 
