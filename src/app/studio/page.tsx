@@ -309,7 +309,7 @@ export default function StudioPage() {
             <p className="text-amber-800 text-sm font-medium">
               {credits === 0 ? "Krediniz tükendi." : `Yalnızca ${credits} krediniz var.`} Sahneleme için en az 5 kredi gerekiyor.
             </p>
-            <Link href="/#fiyatlandirma" className="text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors px-3 py-1.5 rounded-xl flex-shrink-0">
+            <Link href="/dashboard/credits" className="text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors px-3 py-1.5 rounded-xl flex-shrink-0">
               Kredi Al
             </Link>
           </div>

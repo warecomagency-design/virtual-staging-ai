@@ -67,7 +67,11 @@ export default async function DashboardPage() {
             </div>
             <span className="font-bold text-slate-900">esyaekle</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <Link href="/dashboard/credits" className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors hidden sm:block">
+              Kredi Al
+            </Link>
+            <span className="text-slate-200 hidden sm:block">|</span>
             <span className="text-sm text-slate-400 hidden sm:block">{user.email}</span>
             <form action={handleSignOut}>
               <button type="submit" className="text-sm text-slate-500 hover:text-red-500 transition-colors font-medium">
@@ -105,7 +109,7 @@ export default async function DashboardPage() {
             <p className="text-amber-800 text-sm font-medium">
               {balance === 0 ? "Krediniz tükendi." : `Yalnızca ${balance} krediniz kaldı.`} Yeni sahneleme için kredi satın alın.
             </p>
-            <Link href="/#fiyatlandirma" className="text-xs font-bold text-amber-900 underline underline-offset-2 flex-shrink-0 ml-4">
+            <Link href="/dashboard/credits" className="text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors px-3 py-1.5 rounded-xl flex-shrink-0 ml-4">
               Kredi Al
             </Link>
           </div>
