@@ -1,20 +1,33 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 const STYLE_PROMPTS: Record<string, string> = {
   modern:
-    "modern and contemporary furniture with clean lines, neutral colors (white, gray, beige), sleek surfaces, and minimalist decorations",
+    "modern contemporary furniture with clean lines, neutral tones (white, gray, warm beige), statement lighting, geometric rugs, abstract wall art, live plants",
   minimalist:
-    "minimalist furniture with only the essentials, white and cream tones, open spaces, no clutter",
+    "minimalist furniture only the essentials, white and cream palette, open negative space, hidden storage, simple geometric forms, no clutter whatsoever",
   classic:
-    "classic and traditional furniture, rich textures, dark wood accents, elegant drapes and ornate rugs",
+    "classic traditional furniture with rich upholstery, dark walnut wood finishes, ornate details, persian-style rugs, heavy curtains, antique accessories, warm golden lighting",
   scandinavian:
-    "Scandinavian style furniture, light natural wood, white walls, cozy textiles, simple and functional design",
+    "Scandinavian hygge style, light birch wood furniture, white walls, cozy wool throws and cushions, simple clean forms, candles, functional yet warm design",
+};
+
+const ROOM_PROMPTS: Record<string, string> = {
+  living:
+    "living room with sofa, coffee table, TV unit, armchairs, floor lamp, side tables, wall art, decorative cushions and plants",
+  bedroom:
+    "bedroom with a bed with quality bedding, nightstands, dresser, wardrobe, bedside lamps, soft rugs, curtains",
+  dining:
+    "dining room with dining table, dining chairs, a pendant light above the table, sideboard, vase with flowers, table setting",
+  office:
+    "home office with desk, ergonomic chair, bookshelf, desk lamp, computer setup, organizational accessories, motivating wall art",
 };
 
 export async function POST(request: NextRequest) {
   try {
-    const { image, style } = await request.json();
+    const { image, style, roomType } = await request.json();
 
     if (!image) {
       return Response.json({ error: "Görsel gerekli" }, { status: 400 });
@@ -25,15 +38,35 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "API anahtarı eksik" }, { status: 500 });
     }
 
+    // Get authenticated user
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll: () => cookieStore.getAll(),
+          setAll: (cookiesToSet) => {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              );
+            } catch {}
+          },
+        },
+      }
+    );
+    const { data: { user } } = await supabase.auth.getUser();
+
+    // Generate image
     const base64Data = image.split(",")[1];
     const mimeType = image.split(";")[0].split(":")[1] as string;
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-image",
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-image" });
 
     const styleDesc = STYLE_PROMPTS[style] ?? STYLE_PROMPTS.modern;
+    const roomDesc = ROOM_PROMPTS[roomType ?? "living"] ?? ROOM_PROMPTS.living;
 
     const result = await model.generateContent({
       contents: [
@@ -42,7 +75,19 @@ export async function POST(request: NextRequest) {
           parts: [
             { inlineData: { mimeType, data: base64Data } },
             {
-              text: `Transform this empty room into a beautifully staged, furnished space. Add ${styleDesc}. Keep the room's architecture exactly the same (walls, windows, floors, ceiling, lighting). Only add furniture, rugs, curtains, and decorations. The result must look like a professional real estate photo — photorealistic, high quality.`,
+              text: `You are a professional interior designer and architectural visualizer. Transform this empty room photo into a stunning, fully furnished and decorated space.
+
+Room type: ${roomDesc}
+Decoration style: ${styleDesc}
+
+CRITICAL RULES:
+- Keep the room's exact architecture: walls, ceiling, windows, doors, floor material and color MUST stay identical
+- Only ADD furniture, rugs, curtains, plants, artwork, lighting fixtures and decorations
+- Do NOT change wall colors, floor type, window placement, ceiling height or room structure
+- Furniture must be proportional to the room and placed naturally
+- Lighting must look natural and photorealistic — use the existing window light direction
+- Final result must look like a professional real estate photograph shot with a wide-angle lens
+- Ultra-realistic, magazine-quality, 8K photorealistic rendering`,
             },
           ],
         },
@@ -56,13 +101,61 @@ export async function POST(request: NextRequest) {
     const imagePart = parts?.find((p) => "inlineData" in p && p.inlineData);
 
     if (!imagePart || !("inlineData" in imagePart) || !imagePart.inlineData) {
-      const textPart = parts?.find((p) => "text" in p && p.text);
-      const msg = "text" in (textPart ?? {}) ? (textPart as { text: string }).text : "Görsel üretilemedi";
+      const textPart = parts?.find((p) => "text" in p);
+      const msg = textPart && "text" in textPart ? (textPart as { text: string }).text : "Görsel üretilemedi";
       return Response.json({ error: msg }, { status: 500 });
     }
 
-    const outputImage = `data:${imagePart.inlineData.mimeType};base64,${imagePart.inlineData.data}`;
-    return Response.json({ image: outputImage });
+    const outputBase64 = imagePart.inlineData.data;
+    const outputMime = imagePart.inlineData.mimeType;
+    const outputImage = `data:${outputMime};base64,${outputBase64}`;
+
+    // Save to Supabase if user is logged in
+    if (user) {
+      try {
+        const timestamp = Date.now();
+        const uid = user.id;
+
+        // Convert base64 to Buffer for upload
+        const originalBuffer = Buffer.from(base64Data, "base64");
+        const stagedBuffer = Buffer.from(outputBase64, "base64");
+
+        const originalPath = `${uid}/${timestamp}_original.jpg`;
+        const stagedPath = `${uid}/${timestamp}_staged.jpg`;
+
+        const { error: uploadOriginalError } = await supabase.storage
+          .from("stagings")
+          .upload(originalPath, originalBuffer, { contentType: mimeType, upsert: false });
+
+        const { error: uploadStagedError } = await supabase.storage
+          .from("stagings")
+          .upload(stagedPath, stagedBuffer, { contentType: outputMime, upsert: false });
+
+        if (!uploadOriginalError && !uploadStagedError) {
+          const { data: { publicUrl: originalUrl } } = supabase.storage
+            .from("stagings")
+            .getPublicUrl(originalPath);
+
+          const { data: { publicUrl: stagedUrl } } = supabase.storage
+            .from("stagings")
+            .getPublicUrl(stagedPath);
+
+          await supabase.from("stagings").insert({
+            user_id: uid,
+            original_url: originalUrl,
+            staged_url: stagedUrl,
+            style: style ?? "modern",
+            room_type: roomType ?? "living",
+          });
+
+          return Response.json({ image: outputImage, saved: true });
+        }
+      } catch {
+        // Storage save failed — still return the generated image
+      }
+    }
+
+    return Response.json({ image: outputImage, saved: false });
   } catch (err: unknown) {
     console.error("Stage API error:", err);
     const message = err instanceof Error ? err.message : "Görsel işlenirken hata oluştu";
