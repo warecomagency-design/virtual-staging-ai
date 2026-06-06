@@ -47,42 +47,9 @@ export default async function DashboardPage() {
   const monthCount = thisMonth(list);
   const balance: number = creditsRow?.balance ?? 0;
 
-  const handleSignOut = async () => {
-    "use server";
-    const supabase = await createClient();
-    await supabase.auth.signOut();
-    redirect("/");
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-geist)]">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <span className="font-bold text-slate-900">esyaekle</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard/credits" className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors hidden sm:block">
-              Kredi Al
-            </Link>
-            <span className="text-slate-200 hidden sm:block">|</span>
-            <span className="text-sm text-slate-400 hidden sm:block">{user.email}</span>
-            <form action={handleSignOut}>
-              <button type="submit" className="text-sm text-slate-500 hover:text-red-500 transition-colors font-medium">
-                Çıkış Yap
-              </button>
-            </form>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-5xl mx-auto px-6 py-8 space-y-6">
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {/* Credit balance — highlighted */}

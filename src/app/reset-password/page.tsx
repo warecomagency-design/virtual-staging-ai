@@ -3,34 +3,43 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { createBrowserClient } from "@supabase/ssr";
 
-export default function SignInPage() {
+export default function ResetPasswordPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Şifreler eşleşmiyor.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Şifre en az 6 karakter olmalı.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      setError("E-posta veya şifre hatalı.");
-      setLoading(false);
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    const { error: err } = await supabase.auth.updateUser({ password });
+    setLoading(false);
+    if (err) {
+      setError(err.message);
     } else {
       router.push("/dashboard");
-      router.refresh();
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 font-[family-name:var(--font-geist)]">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
@@ -41,35 +50,30 @@ export default function SignInPage() {
             </div>
             <span className="font-bold text-slate-900">esyaekle</span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900">Giriş Yap</h1>
-          <p className="text-slate-500 text-sm mt-1">Hesabınıza giriş yapın</p>
+          <h1 className="text-2xl font-bold text-slate-900">Yeni Şifre Belirle</h1>
+          <p className="text-slate-500 text-sm mt-1">Hesabınız için yeni bir şifre girin</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">E-posta</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="ornek@email.com"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-sm font-medium text-slate-700">Şifre</label>
-              <Link href="/forgot-password" className="text-xs text-blue-600 hover:underline font-medium">
-                Şifremi unuttum
-              </Link>
-            </div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Yeni Şifre</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="En az 6 karakter"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Şifre (Tekrar)</label>
+            <input
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Şifreyi tekrar girin"
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -85,16 +89,9 @@ export default function SignInPage() {
             disabled={loading}
             className="w-full py-2.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 disabled:opacity-50 transition-colors"
           >
-            {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
+            {loading ? "Kaydediliyor..." : "Şifreyi Kaydet"}
           </button>
         </form>
-
-        <p className="text-center text-sm text-slate-500 mt-4">
-          Hesabınız yok mu?{" "}
-          <Link href="/sign-up" className="text-blue-600 font-medium hover:underline">
-            Ücretsiz kayıt olun
-          </Link>
-        </p>
       </div>
     </div>
   );

@@ -35,18 +35,6 @@ export default function CreditsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-geist)]">
-      <header className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto flex items-center gap-3">
-          <Link href="/dashboard" className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </Link>
-          <div className="h-5 w-px bg-slate-200" />
-          <span className="font-bold text-slate-900 text-sm">Kredi Satın Al</span>
-        </div>
-      </header>
-
       <div className="max-w-3xl mx-auto px-6 py-10">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-slate-900 mb-2">Kredi Paketleri</h1>
