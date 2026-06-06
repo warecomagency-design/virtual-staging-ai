@@ -27,7 +27,7 @@ const ROOM_PROMPTS: Record<string, string> = {
 
 export async function POST(request: NextRequest) {
   try {
-    const { image, style, roomType } = await request.json();
+    const { image, style, roomType, customPrompt } = await request.json();
 
     if (!image) {
       return Response.json({ error: "Görsel gerekli" }, { status: 400 });
@@ -87,7 +87,8 @@ CRITICAL RULES:
 - Furniture must be proportional to the room and placed naturally
 - Lighting must look natural and photorealistic — use the existing window light direction
 - Final result must look like a professional real estate photograph shot with a wide-angle lens
-- Ultra-realistic, magazine-quality, 8K photorealistic rendering`,
+- Ultra-realistic, magazine-quality, 8K photorealistic rendering
+${customPrompt ? `\nADDITIONAL INSTRUCTIONS FROM THE USER (high priority, follow these carefully):\n${customPrompt}` : ""}`,
             },
           ],
         },

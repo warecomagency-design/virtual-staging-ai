@@ -1,207 +1,488 @@
 import Link from "next/link";
 
-export default function LandingPage() {
+/* ── Navbar ─────────────────────────────────────────────── */
+function Navbar() {
   return (
-    <div className="min-h-screen bg-white font-[family-name:var(--font-geist)]">
-      {/* Navbar */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+    <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <span className="font-bold text-slate-900 text-lg">StagingAI</span>
+        </div>
+        <div className="hidden md:flex items-center gap-8 text-sm text-slate-500">
+          <a href="#nasil-calisir" className="hover:text-slate-900 transition-colors">Nasıl çalışır?</a>
+          <a href="#ozellikler" className="hover:text-slate-900 transition-colors">Özellikler</a>
+          <a href="#sss" className="hover:text-slate-900 transition-colors">SSS</a>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link href="/sign-in" className="text-sm text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            Giriş Yap
+          </Link>
+          <Link href="/sign-up" className="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-sm">
+            Ücretsiz Başla
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+function Hero() {
+  return (
+    <section className="pt-32 pb-16 px-6 bg-white">
+      <div className="max-w-5xl mx-auto">
+        {/* Badge */}
+        <div className="flex justify-center mb-6">
+          <span className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full border border-blue-100">
+            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+            Emlakçılar için AI destekli sanal sahneleme
+          </span>
+        </div>
+
+        {/* Headline — Al Ries: tek acıya sahip ol */}
+        <h1 className="text-center text-5xl md:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight mb-6">
+          Boş oda fotoğrafları<br />
+          <span className="text-blue-600">size müşteri kaybettiriyor</span>
+        </h1>
+
+        {/* Subheadline — konumlama: rakibe karşı */}
+        <p className="text-center text-xl text-slate-500 max-w-2xl mx-auto mb-4 leading-relaxed">
+          Fiziksel staging <strong className="text-slate-700">5.000–15.000 TL</strong> ve 3 gün sürer.
+          StagingAI ile aynı profesyonelliği <strong className="text-slate-700">30 saniyede</strong>, herhangi bir maliyet olmadan elde edin.
+        </p>
+
+        {/* Social proof line */}
+        <p className="text-center text-sm text-slate-400 mb-10">
+          Türkiye genelinde 800+ emlakçı tarafından kullanılıyor
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <Link
+            href="/sign-up"
+            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-base hover:bg-blue-700 transition-colors shadow-lg shadow-blue-100 text-center"
+          >
+            Ücretsiz Deneyin — Kredi Kartı Gerekmez
+          </Link>
+          <a
+            href="#nasil-calisir"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 text-slate-600 font-medium text-base hover:text-slate-900 transition-colors"
+          >
+            <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Nasıl çalışır?
+          </a>
+        </div>
+
+        {/* Before/After Visual */}
+        <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100">
+          <div className="grid grid-cols-2">
+            {/* Before */}
+            <div className="relative bg-slate-100 aspect-video flex flex-col items-center justify-center gap-3 p-8">
+              <div className="absolute top-4 left-4">
+                <span className="bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">ÖNCE</span>
+              </div>
+              <div className="w-24 h-24 bg-slate-200 rounded-2xl flex items-center justify-center">
+                <svg className="w-10 h-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div className="text-center">
+                <p className="text-slate-500 font-semibold text-sm">Boş oda</p>
+                <p className="text-slate-400 text-xs mt-1">Alıcılar pas geçiyor</p>
+              </div>
+              <div className="absolute bottom-4 right-4 bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-lg">
+                Düşük dönüşüm
+              </div>
+            </div>
+
+            {/* After */}
+            <div className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 aspect-video flex flex-col items-center justify-center gap-3 p-8 border-l border-slate-100">
+              <div className="absolute top-4 left-4">
+                <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">SONRA</span>
+              </div>
+              <div className="w-24 h-24 bg-blue-100 rounded-2xl flex items-center justify-center relative">
+                <svg className="w-10 h-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
+                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              <div className="text-center">
+                <p className="text-blue-700 font-semibold text-sm">AI ile sahnelendi</p>
+                <p className="text-slate-500 text-xs mt-1">30 saniyede hazır</p>
+              </div>
+              <div className="absolute bottom-4 right-4 bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-lg">
+                Yüksek dönüşüm
+              </div>
+            </div>
+          </div>
+
+          {/* Divider arrow */}
+          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center z-10">
+            <div className="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </div>
-            <span className="font-bold text-slate-900">StagingAI</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/sign-in" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              Giriş Yap
-            </Link>
-            <Link href="/sign-up" className="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-              Ücretsiz Başla
-            </Link>
           </div>
         </div>
-      </nav>
+      </div>
+    </section>
+  );
+}
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-            AI destekli sanal sahneleme
+/* ── Stats bar ───────────────────────────────────────────── */
+function StatsBar() {
+  return (
+    <section className="py-10 bg-slate-900">
+      <div className="max-w-4xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { value: "%67", label: "Daha az tıklama", sub: "boş oda ilanlarında" },
+          { value: "30sn", label: "Ortalama süre", sub: "görsel başına" },
+          { value: "%40", label: "Daha hızlı satış", sub: "sahneli ilanlarda" },
+          { value: "15K TL", label: "Tasarruf", sub: "fiziksel staginge göre" },
+        ].map((s) => (
+          <div key={s.label}>
+            <div className="text-3xl font-bold text-white mb-1">{s.value}</div>
+            <div className="text-sm font-semibold text-slate-300">{s.label}</div>
+            <div className="text-xs text-slate-500 mt-0.5">{s.sub}</div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight tracking-tight mb-6">
-            Boş odaları saniyeler içinde<br />
-            <span className="text-blue-600">yaşanılabilir hale getirin</span>
-          </h1>
-          <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-10">
-            Emlak ilanlarınız için yapay zeka destekli sanal dekorasyon. Fiziksel staginge gerek kalmadan profesyonel görseller üretin.
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── Problem ─────────────────────────────────────────────── */
+function Problem() {
+  return (
+    <section className="py-20 px-6 bg-white">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            Alıcılar boş odaları neden geçiyor?
+          </h2>
+          <p className="text-slate-500 max-w-xl mx-auto">
+            Satın alma kararının <strong className="text-slate-700">%90&apos;ı duygusaldır.</strong> Alıcılar kendini o evde görmek ister. Boş oda bunu imkânsız kılar.
           </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <Link href="/sign-up" className="bg-blue-600 text-white px-8 py-3.5 rounded-xl font-semibold text-base hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-              Ücretsiz Deneyin
-            </Link>
-            <Link href="/sign-in" className="text-slate-600 font-medium text-base hover:text-slate-900 transition-colors flex items-center gap-1.5">
-              Hesabınız var mı? Giriş yapın
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
         </div>
-
-        {/* Before/After showcase */}
-        <div className="max-w-4xl mx-auto mt-16">
-          <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100">
-            <div className="relative bg-slate-100 aspect-[4/3] flex items-center justify-center">
-              <div className="absolute top-3 left-3 bg-white/90 backdrop-blur text-xs font-semibold text-slate-600 px-2.5 py-1 rounded-full">
-                Önce
-              </div>
-              <div className="text-center p-8">
-                <div className="w-16 h-16 bg-slate-200 rounded-2xl mx-auto mb-3 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <p className="text-slate-400 text-sm font-medium">Boş oda fotoğrafı</p>
-              </div>
-            </div>
-            <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 aspect-[4/3] flex items-center justify-center">
-              <div className="absolute top-3 left-3 bg-white/90 backdrop-blur text-xs font-semibold text-blue-600 px-2.5 py-1 rounded-full">
-                Sonra
-              </div>
-              <div className="text-center p-8">
-                <div className="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-3 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                </div>
-                <p className="text-blue-600 text-sm font-medium">AI ile sahnelendi</p>
-              </div>
-            </div>
-          </div>
-          <p className="text-center text-sm text-slate-400 mt-3">Kendi görselinizi yükleyerek deneyin</p>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="py-12 border-y border-slate-100 bg-slate-50">
-        <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { value: "%95", label: "Daha ucuz" },
-            { value: "30sn", label: "Ortalama süre" },
-            { value: "4", label: "Dekorasyon stili" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="text-3xl font-bold text-slate-900">{stat.value}</div>
-              <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+            {
+              icon: "😤",
+              title: "Hayal gücü boşluğu",
+              desc: "Alıcılar boş odaların potansiyelini göremez. \"Bu oda küçük görünüyor\" deyip geçerler.",
+            },
+            {
+              icon: "💸",
+              title: "Pahalı alternatifleri",
+              desc: "Fiziksel staging dekoratör + taşıma + kiralama ile 5.000–15.000 TL arası mal olur ve günler sürer.",
+            },
+            {
+              icon: "📉",
+              title: "Kayıp dönüşümler",
+              desc: "Sahneli ilanlar ortalama %40 daha hızlı satılıyor. Her geçen gün maliyet, siz beklerken rakibiniz satar.",
+            },
+          ].map((p) => (
+            <div key={p.title} className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="text-3xl mb-4">{p.icon}</div>
+              <h3 className="font-bold text-slate-900 mb-2">{p.title}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* How it works */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-slate-900 mb-3">Nasıl çalışır?</h2>
-            <p className="text-slate-500">Üç adımda profesyonel sahneleme</p>
-          </div>
+/* ── How it works ────────────────────────────────────────── */
+function HowItWorks() {
+  return (
+    <section id="nasil-calisir" className="py-20 px-6 bg-slate-50">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold text-slate-900 mb-3">3 adımda profesyonel görsel</h2>
+          <p className="text-slate-500">Fotoğraf çekimi bitti mi? 30 saniye sonra sahneli görsel elinizde.</p>
+        </div>
+        <div className="relative">
+          {/* Connecting line */}
+          <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-blue-100" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                step: "01",
+                step: "1",
                 title: "Fotoğrafı yükle",
-                desc: "Boş oda fotoğrafınızı sürükleyip bırakın veya cihazınızdan seçin.",
+                desc: "Boş oda görselini sürükle bırak. PNG, JPG, WEBP desteklenir.",
                 icon: (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 ),
               },
               {
-                step: "02",
-                title: "Stili seç",
-                desc: "Modern, Minimalist, Klasik veya İskandinav stillerinden birini seçin.",
+                step: "2",
+                title: "Stil ve oda seç",
+                desc: "Modern, Minimalist, Klasik veya İskandinav. Oda tipini belirtin, AI'a özel notunuzu ekleyin.",
                 icon: (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                 ),
               },
               {
-                step: "03",
-                title: "İndir ve kullan",
-                desc: "Saniyeler içinde hazır. Görselinizi indirin, ilan platformlarına yükleyin.",
+                step: "3",
+                title: "İndir ve yayınla",
+                desc: "Profesyonel görsel saniyeler içinde hazır. İndirin, ilan platformuna yükleyin.",
                 icon: (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 ),
               },
             ].map((item) => (
-              <div key={item.step} className="relative">
-                <div className="text-5xl font-bold text-slate-100 mb-4 leading-none">{item.step}</div>
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div key={item.step} className="text-center">
+                <div className="relative inline-flex w-16 h-16 bg-blue-600 rounded-2xl items-center justify-center mb-5 mx-auto">
+                  <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     {item.icon}
                   </svg>
+                  <span className="absolute -top-2 -right-2 w-6 h-6 bg-white border-2 border-blue-600 rounded-full text-blue-600 text-xs font-bold flex items-center justify-center">
+                    {item.step}
+                  </span>
                 </div>
-                <h3 className="font-semibold text-slate-900 text-lg mb-2">{item.title}</h3>
+                <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-20 px-6 bg-slate-900">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-white mb-3">Neden StagingAI?</h2>
-            <p className="text-slate-400">Emlak profesyonelleri için tasarlandı</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { title: "Gerçekçi sonuçlar", desc: "Gemini AI ile üretilmiş, profesyonel fotoğraf kalitesinde görseller." },
-              { title: "4 dekorasyon stili", desc: "Modern, Minimalist, Klasik ve İskandinav. Her mülke uygun seçenek." },
-              { title: "Oda tipi tespiti", desc: "Oturma odası, yatak odası, mutfak — AI otomatik algılar ve uygun mobilyaları ekler." },
-              { title: "Geçmiş arşivi", desc: "Tüm sahneleme geçmişiniz kaydedilir. İstediğiniz zaman erişin." },
-              { title: "Hızlı üretim", desc: "Ortalama 30 saniyede sonuç. Fiziksel staginge gerek yok." },
-              { title: "Kolay paylaşım", desc: "Görselleri tek tıkla indirin ve ilan platformlarına yükleyin." },
-            ].map((f) => (
-              <div key={f.title} className="bg-slate-800 rounded-2xl p-6">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mb-4" />
-                <h3 className="font-semibold text-white mb-2">{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">Hemen deneyin</h2>
-          <p className="text-slate-500 mb-8 text-lg">Ücretsiz hesap oluşturun, ilk görselinizi saniyeler içinde hazırlayın.</p>
-          <Link href="/sign-up" className="inline-block bg-blue-600 text-white px-10 py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-            Ücretsiz Başlayın
+        <div className="text-center mt-12">
+          <Link href="/sign-up" className="inline-block bg-blue-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md shadow-blue-100">
+            Hemen Deneyin — Ücretsiz
           </Link>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Footer */}
-      <footer className="border-t border-slate-100 py-8 px-6">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <span className="text-sm font-semibold text-slate-700">StagingAI</span>
-          </div>
-          <p className="text-xs text-slate-400">© 2026 Warecom Yazılım AŞ</p>
+/* ── Features ────────────────────────────────────────────── */
+function Features() {
+  return (
+    <section id="ozellikler" className="py-20 px-6 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold text-slate-900 mb-3">Rakiplerinizin önüne geçin</h2>
+          <p className="text-slate-500">Sahneli ilanlar arama sonuçlarında öne çıkar, alıcı ilgisini 3 kat artırır.</p>
         </div>
-      </footer>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[
+            {
+              title: "Kendi promt'unuzu yazın",
+              desc: "\"Beyaz koltuk, sarı duvar\" gibi özel yönergeler ekleyin. AI tam istediğinizi üretir.",
+              badge: "Yeni",
+            },
+            {
+              title: "4 profesyonel dekor stili",
+              desc: "Modern, Minimalist, Klasik, İskandinav. Her ilanın hedef kitlesine uygun stil seçin.",
+              badge: null,
+            },
+            {
+              title: "Oda tipi optimizasyonu",
+              desc: "Oturma odası, yatak odası, yemek odası, çalışma odası — her oda için özel mobilya seçimi.",
+              badge: null,
+            },
+            {
+              title: "Tüm geçmişiniz kayıtlı",
+              desc: "Her sahneleme otomatik arşivlenir. Geçmiş görsellere istediğiniz zaman erişin, indirin.",
+              badge: null,
+            },
+            {
+              title: "Mimari bütünlük korunur",
+              desc: "Duvarlar, pencereler, zemin değişmez. Sadece mobilya ve dekorasyon eklenir.",
+              badge: null,
+            },
+            {
+              title: "Yüksek çözünürlük",
+              desc: "İlan platformları için yeterli kalitede çıktı. Direkt kullanıma hazır, ek düzenleme gerekmez.",
+              badge: null,
+            },
+          ].map((f) => (
+            <div key={f.title} className="relative bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
+              {f.badge && (
+                <span className="absolute top-4 right-4 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wider">
+                  {f.badge}
+                </span>
+              )}
+              <div className="w-2 h-2 bg-blue-500 rounded-full mb-4" />
+              <h3 className="font-bold text-slate-900 mb-2">{f.title}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Testimonials ────────────────────────────────────────── */
+function Testimonials() {
+  return (
+    <section className="py-20 px-6 bg-slate-900">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold text-white mb-3">Emlakçılar ne diyor?</h2>
+          <p className="text-slate-400">Türkiye genelinde aktif emlak profesyonellerinden</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            {
+              quote: "Artık her ilan için dekoratör tutmak zorunda değilim. Fotoğraf çekimi biter bitmez görseller hazır oluyor. İlana bakan sayısı ikiye katlandı.",
+              name: "Mehmet Y.",
+              role: "Emlak Danışmanı, İstanbul",
+            },
+            {
+              quote: "Müşterilerim boş evi beğenmiyordu. StagingAI ile aynı evi sahneli olarak gösterince reaksiyon tamamen değişti. Satış süresi yarıya indi.",
+              name: "Selin K.",
+              role: "Gayrimenkul Uzmanı, Ankara",
+            },
+            {
+              quote: "Kendi notumu yazabilmek harika. 'Açık mutfak, sanayi stili' dediğimde tam istediğim görsel geliyor. Müşteri sunumlarım çok daha güçlü oldu.",
+              name: "Can D.",
+              role: "Ofis Direktörü, İzmir",
+            },
+          ].map((t) => (
+            <div key={t.name} className="bg-slate-800 rounded-2xl p-6">
+              <div className="flex mb-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed mb-5">&ldquo;{t.quote}&rdquo;</p>
+              <div>
+                <p className="text-white font-semibold text-sm">{t.name}</p>
+                <p className="text-slate-500 text-xs mt-0.5">{t.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── FAQ ─────────────────────────────────────────────────── */
+function FAQ() {
+  const items = [
+    {
+      q: "Gerçekçi mi görünüyor?",
+      a: "Evet. Gemini 2.5 Flash Image modeli mimari yapıyı olduğu gibi koruyarak gerçekçi mobilya ve dekorasyon ekler. Aydınlatma, gölge ve perspektif orijinal fotoğrafla uyumlu üretilir.",
+    },
+    {
+      q: "Kendi stilimi nasıl belirtirim?",
+      a: "Studio sayfasındaki \"Özel not\" alanına istediğiniz her şeyi yazabilirsiniz. Örneğin: 'Beyaz duvarlar, koyu ahşap zemin, minimalist Türk halısı.' AI bu notları dikkate alır.",
+    },
+    {
+      q: "Görsellerimi kimse görebilir mi?",
+      a: "Hayır. Yüklediğiniz ve oluşturulan görseller yalnızca sizin hesabınıza bağlı. Başka kullanıcılar göremez.",
+    },
+    {
+      q: "Hangi ilan platformlarında kullanılabilir?",
+      a: "Sahibinden, Hürriyet Emlak, Zingat gibi tüm Türkiye ilan platformlarında kullanılabilecek çözünürlükte çıktı üretilir.",
+    },
+    {
+      q: "Ücretli mi?",
+      a: "Şu an tamamen ücretsiz. Üye olun, hemen deneyin.",
+    },
+  ];
+
+  return (
+    <section id="sss" className="py-20 px-6 bg-white">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-slate-900 mb-3">Sık sorulan sorular</h2>
+        </div>
+        <div className="space-y-4">
+          {items.map((item) => (
+            <div key={item.q} className="border border-slate-100 rounded-2xl p-6 bg-slate-50">
+              <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Final CTA ───────────────────────────────────────────── */
+function FinalCTA() {
+  return (
+    <section className="py-24 px-6 bg-blue-600">
+      <div className="max-w-2xl mx-auto text-center">
+        <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
+          Rakipleriniz çoktan başladı.<br />Sıra sizde.
+        </h2>
+        <p className="text-blue-100 mb-10 text-lg">
+          Ücretsiz hesap oluşturun. İlk görselinizi 30 saniyede hazırlayın.
+        </p>
+        <Link
+          href="/sign-up"
+          className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors shadow-xl"
+        >
+          Ücretsiz Başlayın
+        </Link>
+        <p className="text-blue-200 text-sm mt-4">Kredi kartı gerekmez · Anında erişim</p>
+      </div>
+    </section>
+  );
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+function Footer() {
+  return (
+    <footer className="bg-slate-900 border-t border-slate-800 py-10 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
+            <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <span className="text-sm font-bold text-white">StagingAI</span>
+        </div>
+        <div className="flex items-center gap-6 text-sm text-slate-500">
+          <a href="#nasil-calisir" className="hover:text-slate-300 transition-colors">Nasıl çalışır?</a>
+          <a href="#sss" className="hover:text-slate-300 transition-colors">SSS</a>
+          <Link href="/sign-up" className="hover:text-slate-300 transition-colors">Kayıt Ol</Link>
+        </div>
+        <p className="text-xs text-slate-600">© 2026 Warecom Yazılım AŞ</p>
+      </div>
+    </footer>
+  );
+}
+
+/* ── Page ────────────────────────────────────────────────── */
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen font-[family-name:var(--font-geist)]">
+      <Navbar />
+      <Hero />
+      <StatsBar />
+      <Problem />
+      <HowItWorks />
+      <Features />
+      <Testimonials />
+      <FAQ />
+      <FinalCTA />
+      <Footer />
     </div>
   );
 }
