@@ -1,4 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "esyaekle — Boş Odaları AI ile Mobilyalı Hale Getirin",
+  description:
+    "Emlakçılar için AI destekli sanal sahneleme. Boş oda fotoğraflarını 30 saniyede mobilyalı ve yaşanabilir hale getirin. Ücretsiz 15 kredi ile başlayın.",
+  alternates: {
+    canonical: "https://esyaekle.com",
+  },
+  openGraph: {
+    title: "esyaekle — Boş Odaları AI ile Mobilyalı Hale Getirin",
+    description:
+      "Emlakçılar için AI destekli sanal sahneleme. Boş oda fotoğraflarını 30 saniyede mobilyalı ve yaşanabilir hale getirin.",
+    url: "https://esyaekle.com",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+};
 
 /* ── Navbar ─────────────────────────────────────────────── */
 function Navbar() {
