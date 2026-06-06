@@ -546,8 +546,30 @@ function Footer() {
 
 /* ── Page ────────────────────────────────────────────────── */
 export default function LandingPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "esyaekle",
+    url: "https://esyaekle.com",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    description:
+      "Emlakçılar için AI destekli sanal sahneleme aracı. Boş oda fotoğraflarını saniyeler içinde mobilyalı hale getirin.",
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "TRY",
+      lowPrice: "49",
+      highPrice: "120",
+    },
+    inLanguage: "tr",
+  };
+
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <Hero />
       <StatsBar />
