@@ -94,6 +94,7 @@ export default function StudioPage() {
   const step = image ? (result ? 3 : 2) : 1;
 
   return (
+    <>
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-geist)]">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-6 py-3.5 sticky top-0 z-10">
@@ -418,5 +419,6 @@ export default function StudioPage() {
     </div>
 
     {lightbox && <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />}
+    </>
   );
 }
