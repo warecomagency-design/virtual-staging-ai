@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { StagingGrid } from "./_components/StagingGrid";
 
 interface Staging {
   id: string;
@@ -10,20 +11,6 @@ interface Staging {
   room_type: string;
   created_at: string;
 }
-
-const STYLE_LABELS: Record<string, string> = {
-  modern: "Modern",
-  minimalist: "Minimalist",
-  classic: "Klasik",
-  scandinavian: "İskandinav",
-};
-
-const ROOM_LABELS: Record<string, string> = {
-  living: "Oturma Odası",
-  bedroom: "Yatak Odası",
-  dining: "Yemek Odası",
-  office: "Çalışma Odası",
-};
 
 function thisMonth(stagings: Staging[]) {
   const now = new Date();
@@ -52,7 +39,6 @@ export default async function DashboardPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5">
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Credit balance — highlighted */}
           <div className="bg-blue-600 rounded-2xl px-6 py-5 col-span-1">
             <div className="text-3xl font-bold text-white">{balance}</div>
             <div className="text-sm text-blue-100 mt-1">Kalan Kredi</div>
@@ -112,66 +98,8 @@ export default async function DashboardPage() {
           </div>
         )}
 
-        {/* Grid */}
-        {list.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {list.map((s: Staging) => (
-              <div key={s.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 group">
-                <div className="grid grid-cols-2 divide-x divide-slate-100">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={s.original_url}
-                      alt="Önce"
-                      className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute top-2 left-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-widest">
-                      ÖNCE
-                    </span>
-                  </div>
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={s.staged_url}
-                      alt="Sonra"
-                      className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute top-2 left-2 bg-blue-600/90 text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-widest">
-                      SONRA
-                    </span>
-                  </div>
-                </div>
-                <div className="p-4 flex items-center justify-between">
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
-                      <span className="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
-                        {STYLE_LABELS[s.style] ?? s.style}
-                      </span>
-                      {s.room_type && (
-                        <span className="text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">
-                          {ROOM_LABELS[s.room_type] ?? s.room_type}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-slate-400">
-                      {new Date(s.created_at).toLocaleDateString("tr-TR", {
-                        day: "numeric", month: "short", year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                  <a
-                    href={s.staged_url}
-                    download
-                    className="flex-shrink-0 p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors ml-2"
-                    title="İndir"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Grid with lightbox */}
+        {list.length > 0 && <StagingGrid stagings={list} />}
       </div>
     </div>
   );
