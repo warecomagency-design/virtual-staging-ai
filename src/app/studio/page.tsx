@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
+import { ImageLightbox } from "@/components/ImageLightbox";
 
 const STYLES = [
   { id: "modern", label: "Modern", desc: "Temiz çizgiler, nötr tonlar" },
@@ -32,6 +33,7 @@ export default function StudioPage() {
   const [dragging, setDragging] = useState(false);
   const [saved, setSaved] = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -378,11 +380,25 @@ export default function StudioPage() {
             <div className="grid grid-cols-2 divide-x divide-slate-100">
               <div className="p-4">
                 <p className="text-xs font-semibold text-slate-400 mb-2.5 uppercase tracking-widest">Önce</p>
-                <img src={image!} alt="Önce" className="w-full rounded-xl object-cover" />
+                <div className="relative group cursor-zoom-in" onClick={() => setLightbox(image!)}>
+                  <img src={image!} alt="Önce" className="w-full rounded-xl object-cover" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="p-4">
                 <p className="text-xs font-semibold text-slate-400 mb-2.5 uppercase tracking-widest">Sonra</p>
-                <img src={result} alt="Sonra" className="w-full rounded-xl object-cover" />
+                <div className="relative group cursor-zoom-in" onClick={() => setLightbox(result)}>
+                  <img src={result} alt="Sonra" className="w-full rounded-xl object-cover" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-100">
@@ -400,5 +416,7 @@ export default function StudioPage() {
         )}
       </div>
     </div>
+
+    {lightbox && <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />}
   );
 }
